@@ -1,0 +1,484 @@
+/* ── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0a0005;
+  --accent: #ff2d78;
+  --accent2: #ff9de2;
+  --text: #fff;
+  --glow: rgba(255, 45, 120, 0.6);
+  --font-cute: 'Caveat', cursive;
+  --font-horror: 'Creepster', cursive;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-cute);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#app {
+  width: 100%;
+  max-width: 390px;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  position: relative;
+}
+
+/* ── Screen Container ─────────────────────────────────────── */
+.screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 28px;
+  gap: 24px;
+  position: relative;
+  transition: background 0.6s ease;
+}
+
+/* ── Image ────────────────────────────────────────────────── */
+.node-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 24px var(--glow), 0 0 60px rgba(255, 45, 120, 0.2);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.node-image.emoji-image {
+  background: rgba(255, 45, 120, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  box-shadow: 0 0 24px var(--glow), 0 0 60px rgba(255, 45, 120, 0.2);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.node-image.visible,
+.node-image.emoji-image.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ── Text ─────────────────────────────────────────────────── */
+.node-text {
+  font-family: var(--font-cute);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--text);
+  text-shadow: 0 0 12px var(--glow);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+  white-space: pre-line;
+}
+
+.node-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Horror mode text */
+.theme-horror .node-text {
+  font-family: var(--font-horror);
+  font-size: 32px;
+  letter-spacing: 2px;
+  color: #ff2d78;
+  text-shadow: 2px 2px 0 #000, 0 0 20px rgba(255,45,120,0.8), 0 0 40px rgba(255,45,120,0.4);
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.node-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 280px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s ease 1s, transform 0.8s ease 1s;
+}
+
+.node-buttons.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn {
+  font-family: var(--font-cute);
+  font-size: 24px;
+  font-weight: 700;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn-yes {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 20px var(--glow);
+}
+
+.btn-yes:hover {
+  box-shadow: 0 6px 28px var(--glow);
+  transform: translateY(-2px);
+}
+
+.btn-no {
+  background: transparent;
+  color: var(--accent2);
+  border: 2px solid var(--accent2);
+}
+
+.btn-no:hover {
+  background: rgba(255, 157, 226, 0.1);
+}
+
+/* ── Themes per node ──────────────────────────────────────── */
+.theme-dark {
+  background: radial-gradient(ellipse at center, #1a0010 0%, #0a0005 70%);
+}
+
+.theme-horror {
+  background: radial-gradient(ellipse at center, #1f0000 0%, #000 70%);
+}
+
+.theme-chaos {
+  background: radial-gradient(ellipse at center, #0d001a 0%, #00000f 70%);
+}
+
+.theme-celebrate {
+  background: radial-gradient(ellipse at center, #1a0030 0%, #0a0005 70%);
+}
+
+/* ── Animations ───────────────────────────────────────────── */
+
+/* Fade in whole screen */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Fade out whole screen */
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.anim-fade-in  { animation: fadeIn  0.4s ease forwards; }
+.anim-fade-out { animation: fadeOut 0.3s ease forwards; }
+
+/* Shake (on No press) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%       { transform: translateX(-8px) rotate(-1deg); }
+  30%       { transform: translateX(8px)  rotate(1deg); }
+  45%       { transform: translateX(-6px); }
+  60%       { transform: translateX(6px); }
+  75%       { transform: translateX(-3px); }
+  90%       { transform: translateX(3px); }
+}
+
+.anim-shake { animation: shake 0.5s ease; }
+
+/* Glitch (for horror node) */
+@keyframes glitch {
+  0%   { clip-path: inset(0 0 95% 0); transform: translate(-4px, 0); }
+  10%  { clip-path: inset(30% 0 50% 0); transform: translate(4px, 0); }
+  20%  { clip-path: inset(60% 0 20% 0); transform: translate(-4px, 0); }
+  30%  { clip-path: inset(10% 0 80% 0); transform: translate(4px, 0); }
+  40%  { clip-path: inset(80% 0 5% 0);  transform: translate(-4px, 0); }
+  50%  { clip-path: inset(0 0 0 0);     transform: translate(0, 0); }
+  100% { clip-path: inset(0 0 0 0);     transform: translate(0, 0); }
+}
+
+.anim-glitch {
+  position: relative;
+}
+
+.anim-glitch::before,
+.anim-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  color: var(--accent);
+}
+
+.anim-glitch::before {
+  animation: glitch 0.4s linear infinite;
+  text-shadow: 2px 0 #ff2d78;
+}
+
+.anim-glitch::after {
+  animation: glitch 0.4s linear infinite reverse;
+  text-shadow: -2px 0 #00f0ff;
+  opacity: 0.6;
+}
+
+/* Pulse glow (celebrate) */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 24px var(--glow), 0 0 60px rgba(255,45,120,0.2); }
+  50%       { box-shadow: 0 0 48px var(--glow), 0 0 100px rgba(255,45,120,0.5); }
+}
+
+.anim-pulse { animation: pulseGlow 1.5s ease infinite; }
+
+/* Float (celebrate image) */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50%       { transform: translateY(-12px) scale(1.04); }
+}
+
+.anim-float { animation: float 2.5s ease infinite; }
+
+/* Spin (chaos) */
+@keyframes spinIn {
+  from { transform: rotate(-15deg) scale(0.8); opacity: 0; }
+  to   { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+
+.anim-spin-in { animation: spinIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+/* ── Confetti Canvas ──────────────────────────────────────── */
+#confetti-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ── Subtext ──────────────────────────────────────────────── */
+.node-subtext {
+  font-family: var(--font-cute);
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.8s ease 1.4s;
+}
+
+.node-subtext.visible {
+  opacity: 1;
+}
+
+/* ── Bouncing Image ───────────────────────────────────────── */
+.bounce-img {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 24px var(--glow), 0 0 60px rgba(255, 45, 120, 0.2);
+  pointer-events: none;
+  transform-origin: center center;
+  z-index: 10;
+}
+
+/* ── Schedule Screen ──────────────────────────────────────── */
+.schedule-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding-top: 8px;
+}
+
+.days-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 320px;
+  gap: 6px;
+}
+
+.day-btn {
+  flex: 1;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 45, 120, 0.3);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: var(--font-cute);
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0;
+}
+
+.day-btn:active {
+  transform: scale(0.9);
+}
+
+.day-btn.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 14px var(--glow);
+}
+
+/* ── Time Slots ───────────────────────────────────────────── */
+.time-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); max-height: 0; }
+  to   { opacity: 1; transform: translateY(0);    max-height: 120px; }
+}
+
+@keyframes slideUp {
+  from { opacity: 1; transform: translateY(0);    max-height: 120px; }
+  to   { opacity: 0; transform: translateY(-8px); max-height: 0; }
+}
+
+.time-slot-card {
+  background: rgba(255, 45, 120, 0.08);
+  border: 1px solid rgba(255, 45, 120, 0.2);
+  border-radius: 14px;
+  padding: 10px 14px;
+  animation: slideDown 0.25s ease forwards;
+  overflow: hidden;
+}
+
+.time-slot-card.collapsing {
+  animation: slideUp 0.25s ease forwards;
+}
+
+.time-slot-name {
+  font-family: var(--font-cute);
+  font-size: 15px;
+  color: var(--accent2);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.time-options {
+  display: flex;
+  gap: 8px;
+}
+
+.time-opt {
+  flex: 1;
+  padding: 6px 4px;
+  border-radius: 20px;
+  border: 1.5px solid rgba(255, 45, 120, 0.3);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-cute);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.time-opt:active { transform: scale(0.93); }
+
+.time-opt.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 10px var(--glow);
+}
+
+.schedule-footer {
+  width: 100%;
+  max-width: 280px;
+}
+
+.schedule-submit,
+.schedule-btn {
+  width: 100%;
+}
+
+.schedule-submit {
+  display: none;
+}
+
+/* ── Confirmed Screen ─────────────────────────────────────── */
+.confirmed-preview {
+  font-family: var(--font-cute);
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  background: rgba(255, 45, 120, 0.08);
+  border: 1px solid rgba(255, 45, 120, 0.2);
+  border-radius: 14px;
+  padding: 14px 18px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.copy-btn {
+  font-family: var(--font-cute);
+  font-size: 22px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--accent2);
+  border: 2px solid var(--accent2);
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.copy-btn:active { transform: scale(0.95); }
+
+.copied-toast {
+  font-family: var(--font-cute);
+  font-size: 18px;
+  color: var(--accent2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.copied-toast.visible { opacity: 1; }
