@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>cute &amp; funny site options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #fff6f0; --card: #ffffff; --ink: #3b2a2a; --muted: #8a7570;
+    --pink: #ff8fab; --peach: #ffc4a3; --mint: #b8e8d0; --sky: #bfe3ff; --butter: #fff0a8;
+    --line: #3b2a2a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1d1618; --card: #2a2023; --ink: #fbeee8; --muted: #b9a39d; --line: #fbeee8; }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Nunito', system-ui, sans-serif; line-height: 1.5; padding: 0 16px 64px; }
+  header { max-width: 980px; margin: 0 auto; padding: 48px 0 24px; }
+  h1 { font-family: 'Caveat', cursive; font-size: clamp(2.6rem, 8vw, 4.2rem); line-height: 1; }
+  header p { color: var(--muted); max-width: 56ch; margin-top: 12px; }
+  .grid { max-width: 980px; margin: 0 auto; display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+  .opt { background: var(--card); border: 2.5px solid var(--line); border-radius: 20px; box-shadow: 5px 5px 0 var(--line); display: flex; flex-direction: column; overflow: hidden; }
+  .demo { height: 210px; position: relative; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; text-align: center; padding: 12px; overflow: hidden; border-bottom: 2.5px solid var(--line); color: #3b2a2a; }
+  .info { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .tag { font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  h2 { font-family: 'Caveat', cursive; font-size: 1.9rem; line-height: 1.05; }
+  .info p { font-size: .93rem; }
+  .src { font-size: .82rem; color: var(--muted); margin-top: auto; padding-top: 6px; }
+  .src a { color: inherit; font-weight: 700; }
+  button { font: inherit; font-weight: 800; cursor: pointer; border: 2.5px solid #3b2a2a; border-radius: 999px; padding: 6px 16px; background: #fff; color: #3b2a2a; box-shadow: 2px 2px 0 #3b2a2a; }
+  button:active { transform: translate(2px, 2px); box-shadow: none; }
+  .big { font-family: 'Caveat', cursive; font-size: 1.7rem; font-weight: 700; line-height: 1.1; }
+  .note { max-width: 980px; margin: 36px auto 0; font-size: .88rem; color: var(--muted); border-top: 2px dashed var(--muted); padding-top: 16px; }
+  .note a { color: inherit; }
+
+  /* per-demo backgrounds */
+  #d1 { background: var(--pink); } #d2 { background: var(--butter); } #d3 { background: var(--sky); }
+  #d4 { background: var(--mint); } #d5 { background: var(--peach); } #d6 { background: #e5d4ff; }
+
+  /* 2 cat */
+  #cat { font-size: 4.2rem; cursor: pointer; user-select: none; transition: transform .1s; background: none; border: 0; box-shadow: none; padding: 0; }
+  #cat:active { transform: scale(.88) rotate(-6deg); }
+  /* 5 eyes */
+  .eyes { display: flex; gap: 14px; }
+  .eye { width: 54px; height: 54px; background: #fff; border: 3px solid #3b2a2a; border-radius: 50%; position: relative; }
+  .pupil { width: 20px; height: 20px; background: #3b2a2a; border-radius: 50%; position: absolute; top: 15px; left: 15px; }
+  /* 6 loading */
+  .bar { width: 80%; height: 16px; border: 2.5px solid #3b2a2a; border-radius: 99px; background: #fff; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--pink); transition: width .5s; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>pick a vibe 🐾</h1>
+  <p>Six ideas for the rebuild: same pocket-sized, one-screen, button-driven format as the date site, but pointed at being cute and funny instead. Every card below is a working mini-demo. Poke them.</p>
+</header>
+
+<main class="grid">
+
+  <!-- 1 -->
+  <article class="opt">
+    <div class="demo" id="d1">
+      <div class="big" id="q1">is this website cute?</div>
+      <div style="position:relative;width:100%;height:60px">
+        <button id="yes1" style="position:absolute;left:18%;top:8px">yes 😼</button>
+        <button id="no1" style="position:absolute;left:58%;top:8px">no</button>
+      </div>
+    </div>
+    <div class="info">
+      <span class="tag">Option 1 · closest to what you have</span>
+      <h2>The Rigged Poll</h2>
+      <p>A dumb question with a "No" button that dodges your cursor, and a "Yes" that grows each time you miss. Ends in confetti and a self-congratulating message. Keeps your existing flow (splash → persuade → celebrate) and confetti canvas.</p>
+      <p class="src">Pattern from <a href="https://github.com/pandaboi1/Valentine">pandaboi1/Valentine</a> and <a href="https://gittrend.io/repo/CodeKageHQ/Ask-out-your-Valentine">Ask-out-your-Valentine</a></p>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="opt">
+    <div class="demo" id="d2">
+      <button id="cat" aria-label="boop the cat">🐱</button>
+      <div class="big"><span id="boops">0</span> boops</div>
+      <div id="catmsg" style="font-weight:700;font-size:.85rem;min-height:1.3em">boop me</div>
+    </div>
+    <div class="info">
+      <span class="tag">Option 2 · pure comfort</span>
+      <h2>Boop the Cat</h2>
+      <p>One cat. Click it. A counter ticks up, the cat gets progressively more annoyed, then unlocks absurd "achievements" ("Menace to Society" at 50). No backend: counter lives in localStorage.</p>
+      <p class="src">Idea from the "pointless yet funny" genre in <a href="https://github.com/scriptex/awesome-useless-websites">awesome-useless-websites</a></p>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="opt">
+    <div class="demo" id="d3">
+      <div class="big" id="ans3" style="min-height:3.4em;display:flex;align-items:center">ask me anything</div>
+      <button id="ask3">consult the oracle 🔮</button>
+    </div>
+    <div class="info">
+      <span class="tag">Option 3 · most replayable</span>
+      <h2>Unhelpful Oracle</h2>
+      <p>A magic 8-ball that gives confident, useless life advice ("Yes, but only if you drink water first"). Easy to extend: it's just an array of strings, so adding inside jokes is one line each.</p>
+      <p class="src">Same shape as the joke generator <a href="https://github.com/AndrewMedvedev42">AndrewMedvedev42/Show_Me_A_Joke_Generator</a> (I only saw it in a search snippet, but the one it describes uses the Fetch API; ours wouldn't need any network)</p>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="opt">
+    <div class="demo" id="d4">
+      <div class="big" id="t4">please do not press the button</div>
+      <button id="b4" style="background:#ff5d6c;color:#fff">DO NOT PRESS</button>
+    </div>
+    <div class="info">
+      <span class="tag">Option 4 · tiny and dumb</span>
+      <h2>The Do-Not-Press Button</h2>
+      <p>One button, escalating guilt. Each press changes the page: nervous warnings, fake error screens, the button begging you to stop, finally a tiny apology. Great as a one-evening build.</p>
+      <p class="src">Genre reference: <a href="https://github.com/scriptex/awesome-useless-websites">awesome-useless-websites</a></p>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="opt">
+    <div class="demo" id="d5">
+      <div class="eyes"><div class="eye"><div class="pupil"></div></div><div class="eye"><div class="pupil"></div></div></div>
+      <div class="big">i am watching you 👀</div>
+    </div>
+    <div class="info">
+      <span class="tag">Option 5 · lowest effort, highest charm</span>
+      <h2>Googly Eyes</h2>
+      <p>Giant cartoon eyes that follow your cursor (or finger on mobile). Click to make them blink; leave it idle and they fall asleep with little Zs. About 30 lines of JS.</p>
+      <p class="src">Inspired by the cursor-follow gag from Pointer Pointer, also listed in <a href="https://github.com/scriptex/awesome-useless-websites">awesome-useless-websites</a></p>
+    </div>
+  </article>
+
+  <!-- 6 -->
+  <article class="opt">
+    <div class="demo" id="d6">
+      <div class="big" id="t6">ready to load your vibes?</div>
+      <div class="bar"><i id="f6"></i></div>
+      <button id="b6">load</button>
+    </div>
+    <div class="info">
+      <span class="tag">Option 6 · best for sharing</span>
+      <h2>Fake Loading Screen</h2>
+      <p>A progress bar that narrates nonsense ("Untangling headphones…", "Convincing the cat…") and lands on a personalized punchline. Share-friendly because the end screen can say whatever you want.</p>
+      <p class="src">Original concept, no direct source</p>
+    </div>
+  </article>
+
+</main>
+
+<p class="note">
+  <strong>Sources &amp; honesty check:</strong> I found these via web search and only saw search snippets, not the repos' code or licenses. So these are <em>inspiration for the pattern</em>; all six demos above are written from scratch and nothing is copied. If you want to borrow actual code from a repo, check its license first.
+  Also found: <a href="https://github.com/izabela-marcinkowska/wannabemyvalentine">wannabemyvalentine</a> (React + Vite, shrinking No button, so heavier than your static setup) and <a href="https://www.val.town/x/reabetswe/valentine-invite">a Val.town invite</a>.
+</p>
+
+<script>
+/* 1 runaway no */
+(() => {
+  const no = document.getElementById('no1'), yes = document.getElementById('yes1'), q = document.getElementById('q1');
+  let scale = 1;
+  const dodge = () => {
+    const box = no.parentElement.getBoundingClientRect();
+    no.style.left = Math.random() * (box.width - no.offsetWidth) + 'px';
+    no.style.top = Math.random() * (box.height - no.offsetHeight) + 'px';
+    scale = Math.min(scale + .12, 1.8);
+    yes.style.transform = `scale(${scale})`;
+  };
+  no.addEventListener('mouseenter', dodge);
+  no.addEventListener('touchstart', e => { e.preventDefault(); dodge(); });
+  no.addEventListener('click', dodge);
+  yes.addEventListener('click', () => { q.textContent = 'correct. 🎉 you have good taste'; no.remove(); yes.remove(); });
+})();
+
+/* 2 cat */
+(() => {
+  const el = document.getElementById('boops'), msg = document.getElementById('catmsg'), cat = document.getElementById('cat');
+  let n = 0;
+  try { n = +localStorage.getItem('boops') || 0; } catch (e) {}
+  el.textContent = n;
+  const faces = [[0,'🐱','boop me'],[5,'😺','ok that was nice'],[15,'😸','you again?'],[30,'😾','this is getting weird'],[50,'🙀','Achievement: Menace to Society']];
+  cat.addEventListener('click', () => {
+    n++; el.textContent = n;
+    try { localStorage.setItem('boops', n); } catch (e) {}
+    const f = [...faces].reverse().find(f => n >= f[0]);
+    cat.textContent = f[1]; msg.textContent = f[2];
+  });
+})();
+
+/* 3 oracle */
+(() => {
+  const a = ['Yes, but only after you drink water.','The stars say: send the text.','Absolutely not. Have a snack instead.','Ask again after a nap.','Outlook good, outfit questionable.','Ancient wisdom: it is probably fine.','No. But with confidence.','Reply hazy. Try turning yourself off and on again.'];
+  let last = -1;
+  document.getElementById('ask3').addEventListener('click', () => {
+    let i; do { i = Math.floor(Math.random() * a.length); } while (i === last);
+    last = i; document.getElementById('ans3').textContent = a[i];
+  });
+})();
+
+/* 4 do not press */
+(() => {
+  const lines = ['please do not press the button','…okay. that was your one warning.','hey!! stop that','ERROR 404: your self-control not found','i am begging you','fine. i am proud of you. do whatever.','(the button has left the chat)'];
+  let i = 0; const t = document.getElementById('t4'), b = document.getElementById('b4');
+  b.addEventListener('click', () => {
+    i = Math.min(i + 1, lines.length - 1); t.textContent = lines[i];
+    if (i === lines.length - 1) b.style.visibility = 'hidden';
+  });
+})();
+
+/* 5 eyes */
+(() => {
+  const demo = document.getElementById('d5'), eyes = demo.querySelectorAll('.eye');
+  const look = (x, y) => eyes.forEach(e => {
+    const r = e.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    const ang = Math.atan2(y - cy, x - cx), d = Math.min(15, Math.hypot(x - cx, y - cy) / 6);
+    e.firstElementChild.style.transform = `translate(${Math.cos(ang) * d}px, ${Math.sin(ang) * d}px)`;
+  });
+  document.addEventListener('mousemove', e => look(e.clientX, e.clientY));
+  document.addEventListener('touchmove', e => look(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+})();
+
+/* 6 loading */
+(() => {
+  const steps = ['Untangling headphones…','Convincing the cat…','Locating snacks…','Reticulating splines…','Pretending to work…'];
+  const t = document.getElementById('t6'), f = document.getElementById('f6'), b = document.getElementById('b6');
+  b.addEventListener('click', () => {
+    b.disabled = true; let i = 0; f.style.width = '0';
+    const tick = setInterval(() => {
+      if (i < steps.length) { t.textContent = steps[i]; f.style.width = ((i + 1) / steps.length * 90) + '%'; i++; }
+      else { clearInterval(tick); f.style.width = '100%'; t.textContent = 'Vibes loaded. They are immaculate. ✨'; b.disabled = false; b.textContent = 'again'; }
+    }, 900);
+  });
+})();
+</script>
+</body>
+</html>
