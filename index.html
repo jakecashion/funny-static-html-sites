@@ -4,16 +4,73 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>hi kristen 🌹</title>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>do not press 👀</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Creepster&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="app">
-    <div id="screen" class="screen"></div>
+    <div id="screen" class="screen">
+      <div class="frog">
+        <svg viewBox="0 0 300 280" width="300" height="280" aria-hidden="true">
+          <defs>
+            <g id="blob">
+              <ellipse cx="150" cy="185" rx="72" ry="52" />
+              <ellipse cx="150" cy="135" rx="105" ry="66" />
+              <circle cx="100" cy="88" r="46" />
+              <circle cx="200" cy="88" r="46" />
+            </g>
+            <g id="feet">
+              <ellipse cx="98" cy="238" rx="26" ry="13" />
+              <ellipse cx="202" cy="238" rx="26" ry="13" />
+            </g>
+          </defs>
+          <!-- lily pad -->
+          <ellipse cx="150" cy="238" rx="138" ry="36" fill="#3b2a2a" />
+          <ellipse cx="150" cy="238" rx="134" ry="32" fill="#6fcf86" />
+          <ellipse cx="150" cy="240" rx="112" ry="22" fill="#86dd9a" />
+          <path d="M150 240 L284 240" stroke="#5ab873" stroke-width="3" stroke-linecap="round" />
+          <path d="M150 240 L40 230 M150 240 L60 258" stroke="#5ab873" stroke-width="3" stroke-linecap="round" />
+          <!-- feet, then body/head/eye-bumps with an outline underneath -->
+          <use href="#feet" fill="#3b2a2a" stroke="#3b2a2a" stroke-width="8" />
+          <use href="#feet" fill="#8fd694" />
+          <use href="#blob" fill="#3b2a2a" stroke="#3b2a2a" stroke-width="8" />
+          <use href="#blob" fill="#8fd694" />
+          <!-- belly, cheeks, nostrils -->
+          <ellipse cx="150" cy="208" rx="40" ry="24" fill="#e2f8d4" />
+          <ellipse cx="62" cy="150" rx="15" ry="9" fill="#ff9fb5" />
+          <ellipse cx="238" cy="150" rx="15" ry="9" fill="#ff9fb5" />
+          <circle cx="140" cy="128" r="3" fill="#3b2a2a" />
+          <circle cx="160" cy="128" r="3" fill="#3b2a2a" />
+          <!-- flower -->
+          <g transform="translate(238 232)">
+            <circle cx="0" cy="-8" r="6" fill="#ff8fab" /><circle cx="8" cy="-2" r="6" fill="#ff8fab" />
+            <circle cx="5" cy="7" r="6" fill="#ff8fab" /><circle cx="-5" cy="7" r="6" fill="#ff8fab" />
+            <circle cx="-8" cy="-2" r="6" fill="#ff8fab" /><circle cx="0" cy="0" r="5" fill="#fff0a8" />
+          </g>
+        </svg>
+        <!-- eyes and brows sit on the two eye bumps (centers x=100 and x=200) -->
+        <div class="face" id="face">
+          <div class="side">
+            <div class="brow" data-side="l"></div>
+            <div class="eye"><div class="lid"></div><div class="pupil"></div></div>
+          </div>
+          <div class="side">
+            <div class="brow" data-side="r"></div>
+            <div class="eye"><div class="lid"></div><div class="pupil"></div></div>
+          </div>
+        </div>
+      </div>
+      <p id="line" class="line">please do not press the button</p>
+      <button id="btn" class="press">DO NOT PRESS</button>
+      <div id="choice" class="choice" hidden>
+        <button id="yes" class="press yes">yes</button>
+        <button id="no" class="press no">no</button>
+      </div>
+    </div>
   </div>
   <canvas id="confetti-canvas"></canvas>
   <script src="script.js"></script>

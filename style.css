@@ -6,13 +6,10 @@
 }
 
 :root {
-  --bg: #0a0005;
-  --accent: #ff2d78;
-  --accent2: #ff9de2;
-  --text: #fff;
-  --glow: rgba(255, 45, 120, 0.6);
+  --bg: #fff0e6;
+  --ink: #3b2a2a;
+  --accent: #ff5d6c;
   --font-cute: 'Caveat', cursive;
-  --font-horror: 'Creepster', cursive;
 }
 
 html, body {
@@ -23,7 +20,7 @@ html, body {
 
 body {
   background: var(--bg);
-  color: var(--text);
+  color: var(--ink);
   font-family: var(--font-cute);
   display: flex;
   align-items: center;
@@ -38,447 +35,183 @@ body {
   align-items: center;
   justify-content: center;
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-  position: relative;
 }
 
-/* ── Screen Container ─────────────────────────────────────── */
 .screen {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 28px;
   padding: 32px 28px;
-  gap: 24px;
+}
+
+/* ── Face ─────────────────────────────────────────────────── */
+.frog {
   position: relative;
-  transition: background 0.6s ease;
+  width: 300px;
+  height: 280px;
+}
+.frog svg { display: block; }
+
+@media (max-width: 340px) {
+  .frog { zoom: 0.85; }
 }
 
-/* ── Image ────────────────────────────────────────────────── */
-.node-image {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 24px var(--glow), 0 0 60px rgba(255, 45, 120, 0.2);
-  opacity: 0;
-  transform: scale(0.85);
-  transition: opacity 1.2s ease, transform 1.2s ease;
-}
+/* Eyes are positioned in the SVG's 300x280 coordinate space: bump centers at x=100/200, y=88 */
+.face { position: absolute; inset: 0; }
 
-.node-image.emoji-image {
-  background: rgba(255, 45, 120, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 80px;
-  border-radius: 50%;
-  width: 180px;
-  height: 180px;
-  box-shadow: 0 0 24px var(--glow), 0 0 60px rgba(255, 45, 120, 0.2);
-  opacity: 0;
-  transform: scale(0.85);
-  transition: opacity 1.2s ease, transform 1.2s ease;
-}
-
-.node-image.visible,
-.node-image.emoji-image.visible {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* ── Text ─────────────────────────────────────────────────── */
-.node-text {
-  font-family: var(--font-cute);
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.3;
-  text-align: center;
-  color: var(--text);
-  text-shadow: 0 0 12px var(--glow);
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
-  white-space: pre-line;
-}
-
-.node-text.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Horror mode text */
-.theme-horror .node-text {
-  font-family: var(--font-horror);
-  font-size: 32px;
-  letter-spacing: 2px;
-  color: #ff2d78;
-  text-shadow: 2px 2px 0 #000, 0 0 20px rgba(255,45,120,0.8), 0 0 40px rgba(255,45,120,0.4);
-}
-
-/* ── Buttons ──────────────────────────────────────────────── */
-.node-buttons {
+.side {
+  position: absolute;
+  top: 54px;
+  width: 50px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  width: 100%;
-  max-width: 280px;
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.8s ease 1s, transform 0.8s ease 1s;
+  align-items: center;
+  gap: 4px;
+}
+/* --rot-this lets each side use its own tilt: the right side falls back to --rot unless --rot-r is set */
+.side:first-child { left: 75px; --rot-this: var(--rot, 0deg); }
+.side:last-child { left: 175px; --rot-this: var(--rot-r, var(--rot, 0deg)); }
+
+.brow {
+  width: 46px;
+  height: 9px;
+  background: var(--ink);
+  border-radius: 99px;
+  /* --rot: positive = angry (inner end down), negative = worried */
+  transform: translateY(var(--brow-y, 0px)) rotate(calc(var(--rot-this, 0deg) * var(--dir, 1)));
+  transition: transform 0.35s cubic-bezier(.3, 1.6, .5, 1);
+}
+.brow[data-side="l"] { --dir: 1; }
+.brow[data-side="r"] { --dir: -1; }
+
+.eye {
+  width: 50px;
+  height: 50px;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  transform: scale(var(--eye-scale, 1));
+  transition: transform 0.35s cubic-bezier(.3, 1.6, .5, 1);
+}
+.side:first-child .eye { --dir: 1; }
+.side:last-child .eye { --dir: -1; }
+
+.pupil {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  background: var(--ink);
+  border-radius: 50%;
+  transform: translate(var(--px, 0px), var(--py, 0px)) scale(var(--pupil, 1));
+  transition: transform 0.12s ease-out;
 }
 
-.node-buttons.visible {
-  opacity: 1;
-  transform: translateY(0);
+/* Lid covers the eye from the top; --lid is the % covered. Tilts with the brow. */
+.lid {
+  position: absolute;
+  left: -30%;
+  width: 160%;
+  height: 100%;
+  top: 0;
+  z-index: 1;
+  background: #8fd694; /* frog skin, so the lid reads as part of the frog */
+  border-bottom: 3px solid var(--ink);
+  transform-origin: center bottom;
+  transform: translateY(calc(var(--lid, 0) * 1% - 100%)) rotate(calc(var(--rot-this, 0deg) * var(--dir, 1) * 0.6));
+  transition: transform 0.35s ease;
 }
 
-.btn {
-  font-family: var(--font-cute);
-  font-size: 24px;
+/* Smile lid: rises from below with an arched top, turning the eye into a happy ^ shape.
+   --smile is the % of the eye it covers from the bottom. */
+.eye::after {
+  content: '';
+  position: absolute;
+  left: -30%;
+  width: 160%;
+  height: 100%;
+  top: 100%;
+  z-index: 1;
+  background: #8fd694;
+  border-top: 3px solid var(--ink);
+  border-radius: 50% 50% 0 0 / 60% 60% 0 0;
+  transform: translateY(calc(var(--smile, 0) * -1%));
+  transition: transform 0.35s ease;
+}
+
+/* ── Text & button ────────────────────────────────────────── */
+.line {
+  font-size: 2.1rem;
   font-weight: 700;
-  padding: 16px 24px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  padding: 0 8px; /* room for Caveat's slanted glyphs (like "?") to overhang */
+  text-align: center;
+  min-height: 2.4em;
+  display: flex;
+  align-items: center;
 }
 
-.btn:active {
-  transform: scale(0.95);
-}
+.line.shake { animation: shake 0.35s; }
 
-.btn-yes {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 4px 20px var(--glow);
-}
-
-.btn-yes:hover {
-  box-shadow: 0 6px 28px var(--glow);
-  transform: translateY(-2px);
-}
-
-.btn-no {
-  background: transparent;
-  color: var(--accent2);
-  border: 2px solid var(--accent2);
-}
-
-.btn-no:hover {
-  background: rgba(255, 157, 226, 0.1);
-}
-
-/* ── Themes per node ──────────────────────────────────────── */
-.theme-dark {
-  background: radial-gradient(ellipse at center, #1a0010 0%, #0a0005 70%);
-}
-
-.theme-horror {
-  background: radial-gradient(ellipse at center, #1f0000 0%, #000 70%);
-}
-
-.theme-chaos {
-  background: radial-gradient(ellipse at center, #0d001a 0%, #00000f 70%);
-}
-
-.theme-celebrate {
-  background: radial-gradient(ellipse at center, #1a0030 0%, #0a0005 70%);
-}
-
-/* ── Animations ───────────────────────────────────────────── */
-
-/* Fade in whole screen */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Fade out whole screen */
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-.anim-fade-in  { animation: fadeIn  0.4s ease forwards; }
-.anim-fade-out { animation: fadeOut 0.3s ease forwards; }
-
-/* Shake (on No press) */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  15%       { transform: translateX(-8px) rotate(-1deg); }
-  30%       { transform: translateX(8px)  rotate(1deg); }
-  45%       { transform: translateX(-6px); }
-  60%       { transform: translateX(6px); }
-  75%       { transform: translateX(-3px); }
-  90%       { transform: translateX(3px); }
+  25% { transform: translateX(-6px) rotate(-1deg); }
+  75% { transform: translateX(6px) rotate(1deg); }
 }
 
-.anim-shake { animation: shake 0.5s ease; }
-
-/* Glitch (for horror node) */
-@keyframes glitch {
-  0%   { clip-path: inset(0 0 95% 0); transform: translate(-4px, 0); }
-  10%  { clip-path: inset(30% 0 50% 0); transform: translate(4px, 0); }
-  20%  { clip-path: inset(60% 0 20% 0); transform: translate(-4px, 0); }
-  30%  { clip-path: inset(10% 0 80% 0); transform: translate(4px, 0); }
-  40%  { clip-path: inset(80% 0 5% 0);  transform: translate(-4px, 0); }
-  50%  { clip-path: inset(0 0 0 0);     transform: translate(0, 0); }
-  100% { clip-path: inset(0 0 0 0);     transform: translate(0, 0); }
+.press {
+  font: inherit;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  padding: 10px 34px;
+  box-shadow: 4px 4px 0 var(--ink);
+  cursor: pointer;
+  touch-action: manipulation;
 }
+.press:active { transform: translate(4px, 4px); box-shadow: none; }
+.press[hidden] { display: none; }
 
-.anim-glitch {
+/* Yes / No pair. Yes gets position: fixed from JS once it starts dodging. */
+.choice { display: flex; gap: 16px; }
+.choice[hidden] { display: none; }
+.choice .press { font-size: 1.7rem; padding: 10px 28px; }
+.press.yes { background: #6fcf86; transition: left 0.45s cubic-bezier(.3, 1.6, .5, 1), top 0.45s cubic-bezier(.3, 1.6, .5, 1); }
+.press.yes.dodging { position: fixed; z-index: 5; margin: 0; }
+
+/* Loading: hide the label (keeps the button's size) and show only a spinner */
+.press.loading {
   position: relative;
+  color: transparent;
+  cursor: default;
 }
-
-.anim-glitch::before,
-.anim-glitch::after {
-  content: attr(data-text);
+.press.loading::after {
+  content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  color: var(--accent);
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 4px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.anim-glitch::before {
-  animation: glitch 0.4s linear infinite;
-  text-shadow: 2px 0 #ff2d78;
-}
-
-.anim-glitch::after {
-  animation: glitch 0.4s linear infinite reverse;
-  text-shadow: -2px 0 #00f0ff;
-  opacity: 0.6;
-}
-
-/* Pulse glow (celebrate) */
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 24px var(--glow), 0 0 60px rgba(255,45,120,0.2); }
-  50%       { box-shadow: 0 0 48px var(--glow), 0 0 100px rgba(255,45,120,0.5); }
-}
-
-.anim-pulse { animation: pulseGlow 1.5s ease infinite; }
-
-/* Float (celebrate image) */
-@keyframes float {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50%       { transform: translateY(-12px) scale(1.04); }
-}
-
-.anim-float { animation: float 2.5s ease infinite; }
-
-/* Spin (chaos) */
-@keyframes spinIn {
-  from { transform: rotate(-15deg) scale(0.8); opacity: 0; }
-  to   { transform: rotate(0deg) scale(1); opacity: 1; }
-}
-
-.anim-spin-in { animation: spinIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards; }
-
-/* ── Confetti Canvas ──────────────────────────────────────── */
 #confetti-canvas {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 100;
-}
-
-/* ── Subtext ──────────────────────────────────────────────── */
-.node-subtext {
-  font-family: var(--font-cute);
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.5);
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.8s ease 1.4s;
-}
-
-.node-subtext.visible {
-  opacity: 1;
-}
-
-/* ── Bouncing Image ───────────────────────────────────────── */
-.bounce-img {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 24px var(--glow), 0 0 60px rgba(255, 45, 120, 0.2);
-  pointer-events: none;
-  transform-origin: center center;
-  z-index: 10;
-}
-
-/* ── Schedule Screen ──────────────────────────────────────── */
-.schedule-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-  padding-top: 8px;
-}
-
-.days-row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 320px;
-  gap: 6px;
-}
-
-.day-btn {
-  flex: 1;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 45, 120, 0.3);
-  background: transparent;
-  color: rgba(255, 255, 255, 0.4);
-  font-family: var(--font-cute);
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
-  padding: 0;
-}
-
-.day-btn:active {
-  transform: scale(0.9);
-}
-
-.day-btn.selected {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-  box-shadow: 0 0 14px var(--glow);
-}
-
-/* ── Time Slots ───────────────────────────────────────────── */
-.time-slots {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  max-width: 320px;
-}
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-8px); max-height: 0; }
-  to   { opacity: 1; transform: translateY(0);    max-height: 120px; }
-}
-
-@keyframes slideUp {
-  from { opacity: 1; transform: translateY(0);    max-height: 120px; }
-  to   { opacity: 0; transform: translateY(-8px); max-height: 0; }
-}
-
-.time-slot-card {
-  background: rgba(255, 45, 120, 0.08);
-  border: 1px solid rgba(255, 45, 120, 0.2);
-  border-radius: 14px;
-  padding: 10px 14px;
-  animation: slideDown 0.25s ease forwards;
-  overflow: hidden;
-}
-
-.time-slot-card.collapsing {
-  animation: slideUp 0.25s ease forwards;
-}
-
-.time-slot-name {
-  font-family: var(--font-cute);
-  font-size: 15px;
-  color: var(--accent2);
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-
-.time-options {
-  display: flex;
-  gap: 8px;
-}
-
-.time-opt {
-  flex: 1;
-  padding: 6px 4px;
-  border-radius: 20px;
-  border: 1.5px solid rgba(255, 45, 120, 0.3);
-  background: transparent;
-  color: rgba(255, 255, 255, 0.5);
-  font-family: var(--font-cute);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.time-opt:active { transform: scale(0.93); }
-
-.time-opt.selected {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-  box-shadow: 0 0 10px var(--glow);
-}
-
-.schedule-footer {
-  width: 100%;
-  max-width: 280px;
-}
-
-.schedule-submit,
-.schedule-btn {
-  width: 100%;
-}
-
-.schedule-submit {
-  display: none;
-}
-
-/* ── Confirmed Screen ─────────────────────────────────────── */
-.confirmed-preview {
-  font-family: var(--font-cute);
-  font-size: 17px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
-  text-align: center;
-  background: rgba(255, 45, 120, 0.08);
-  border: 1px solid rgba(255, 45, 120, 0.2);
-  border-radius: 14px;
-  padding: 14px 18px;
-  width: 100%;
-  max-width: 300px;
-}
-
-.copy-btn {
-  font-family: var(--font-cute);
-  font-size: 22px;
-  font-weight: 700;
-  padding: 14px 28px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  background: transparent;
-  color: var(--accent2);
-  border: 2px solid var(--accent2);
-  transition: all 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.copy-btn:active { transform: scale(0.95); }
-
-.copied-toast {
-  font-family: var(--font-cute);
-  font-size: 18px;
-  color: var(--accent2);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  inset: 0;
   pointer-events: none;
 }
-
-.copied-toast.visible { opacity: 1; }
