@@ -18,7 +18,7 @@ const expressions = [
   { line: 'do you want to cancel?',                   rot: -14, browY: -4,  lid: 0,  pupil: 1.2,  eyeScale: 1, choice: true },
   { line: 'oh good! thank you i was worried you wanted to take it back for some reason', rot: -6, browY: -7, lid: 0, smile: 44, pupil: 1.15, eyeScale: 1.05, gaze: [0, -2], button: 'no fr cancel it', alt: { label: 'yeah he can have it!', goto: 'celebrate' } },
   { line: "okay it's been canceled.. here's some sad confetti. Taking the button away.",           rot: -10, browY: -6,  lid: 46, pupil: 1.1,  eyeScale: 1, gaze: [0, 0], final: true },
-  { id: 'celebrate', line: 'YAY!! jake is going to love that pizza!', rot: -4, browY: -12, lid: 0, smile: 62, pupil: 1.2, eyeScale: 1.1, gaze: [0, 0], final: true, celebrate: true }
+  { id: 'celebrate', line: 'happy dance time, jake says thank u', rot: -4, browY: -12, lid: 0, smile: 62, pupil: 1.2, eyeScale: 1.1, gaze: [0, 0], final: true, celebrate: true }
 ];
 
 // ── Elements & state ─────────────────────────────────────────────────────────
