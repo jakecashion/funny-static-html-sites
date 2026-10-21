@@ -181,6 +181,15 @@ body {
 }
 .press:active { transform: translate(4px, 4px); box-shadow: none; }
 .press[hidden] { display: none; }
+.press.alt { background: #6fcf86; font-size: 1.6rem; margin-top: -12px; }
+
+/* Celebration: the whole frog hops */
+.frog.celebrate { animation: hop 0.55s ease-in-out infinite; transform-origin: center bottom; }
+@keyframes hop {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  30% { transform: translateY(0) scale(1.06, 0.92); }
+  60% { transform: translateY(-26px) scale(0.96, 1.06); }
+}
 
 /* Yes / No pair. Yes gets position: fixed from JS once it starts dodging. */
 .choice { display: flex; gap: 16px; }
